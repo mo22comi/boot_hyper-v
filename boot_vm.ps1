@@ -4,6 +4,7 @@
     $my_name = $line.Split("=")[1];
     return $my_name;
 }
+
 function BootVirtualMachine {
     # ウィンドウ非表示
     PowerShell -WindowStyle Hidden -Command Exit
@@ -47,11 +48,8 @@ function ExistsVM {
         [parameter(mandatory=$true)][string]$machine_name
     )
     $machines = Get-VM | Where-Object {$_.Name -eq $machine_name};
-    if(!($null -eq $machines)){
-        return $true;
-    }Else{
-        return $false;
-    }
+    $exists = !($null -eq $machines);
+    return $exists;
 }
 
 function IsRunning {
@@ -60,10 +58,8 @@ function IsRunning {
     )
     # 仮想マシンのState取得
     $state = Get-VM $machine_name | Select-Object State;
-    if($state -match "Running"){
-        return $true;
-    }
-    return $false;
+    $is_running = $state -match "Running";
+    return $is_running;
 }
 
 function ShowDialog {
