@@ -82,7 +82,6 @@ function DialogContents {
     switch ($status) {
         "not_exists" {
             $contents = @{
-                # "text" = "「" + $machine_name + "」という仮想マシンは存在しません。";
                 "text" = "「{0}」という仮想マシンは存在しません。" -f $machine_name;
                 "caption" = "エラー";
                 "buttons_type" = "OK";
