@@ -4,6 +4,8 @@ Hyper-Vの仮想マシンを起動するスクリプトです。
 起動させたいマシンを、name.iniに記載します。
 boot_vm.batを実行することで起動します。
 
+boot_vm.batとboot_vm.ps1は、同じファイル名にする必要があります。
+
 ##### 起動時
 ![boot](https://user-images.githubusercontent.com/47170845/66702889-7604d580-ed47-11e9-97c5-dbb76a962e3a.png)
 ##### 起動確認時
