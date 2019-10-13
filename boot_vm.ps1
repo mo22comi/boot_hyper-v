@@ -13,7 +13,7 @@ function Main {
     # .NET Frameworkのダイアログ関連オブジェクト
     Add-Type -AssemblyName System.Windows.Forms;
     # 仮想マシンの存在チェック
-    if(ExistsVM $machine_name){
+    if(ExistsVirtualMachine $machine_name){
         # 起動してなかったらダイアログ表示して起動、起動実行したら起動確認
         if(IsRunning $machine_name){
             $contents = DialogContents "running" $machine_name;
