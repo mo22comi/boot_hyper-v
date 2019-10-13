@@ -5,11 +5,10 @@
     return $my_name;
 }
 
-function BootVirtualMachine {
+function Main {
     # ウィンドウ非表示
     PowerShell -WindowStyle Hidden -Command Exit
     $machine_name = VirtualMachineName;
-    $RETRY_COUNT = 3;
 
     # .NET Frameworkのダイアログ関連オブジェクト
     Add-Type -AssemblyName System.Windows.Forms;
@@ -23,18 +22,7 @@ function BootVirtualMachine {
             $contents = DialogContents "off" $machine_name;
             $dialog = ShowDialog $contents;
             if($dialog -eq "OK"){
-                Start-VM -Name $machine_name
-                # 起動確認
-                for($i = 0; $i -lt $RETRY_COUNT; $i++){
-                    Start-Sleep -s 5;
-                    if(IsRunning $machine_name){
-                        $contents = DialogContents "success" $machine_name;
-                        $dialog = ShowDialog $contents;
-                        break;
-                    }Else{
-                        continue;
-                    }
-                }
+                BootVirtualMachine $machine_name $dialog
             }
         }
     }Else{
@@ -43,7 +31,27 @@ function BootVirtualMachine {
     }
 }
 
-function ExistsVM {
+function BootVirtualMachine {
+    param (
+        [parameter(mandatory=$true)][string]$machine_name,
+        [parameter(mandatory=$true)][string]$dialog
+    )
+    $RETRY_COUNT = 3;
+    Start-VM -Name $machine_name
+    # 起動確認
+    for($i = 0; $i -lt $RETRY_COUNT; $i++){
+        Start-Sleep -s 5;
+        if(IsRunning $machine_name){
+            $contents = DialogContents "success" $machine_name;
+            $dialog = ShowDialog $contents;
+            break;
+        }Else{
+            continue;
+        }
+    }
+}
+
+function ExistsVirtualMachine {
     param (
         [parameter(mandatory=$true)][string]$machine_name
     )
@@ -120,4 +128,4 @@ function DialogContents {
     return $contents;
 }
 
-BootVirtualMachine;
+Main;
