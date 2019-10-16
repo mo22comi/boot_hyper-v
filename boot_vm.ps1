@@ -1,6 +1,6 @@
 ﻿function VirtualMachineName {
     # iniファイルの最終行から、仮想マシン名を読み込み
-    $line = Get-Content ./name.ini -Tail 1;
+    $line = Get-Content ./boot_vm.ini -Tail 1;
     $my_name = $line.Split("=")[1];
     return $my_name;
 }
